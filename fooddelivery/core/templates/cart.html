@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: sans-serif; background: #f4f6f9; margin: 30px; }
+        .box { background: white; padding: 20px; border-radius: 8px; max-width: 600px; margin: auto; }
+        .item { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 10px 0; }
+        .btn { background: #28a745; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; cursor: pointer; font-size: 16px; margin-top: 15px; text-decoration: none; display: block; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <a href="{% url 'home' %}">← Back to Menu</a>
+        <h2>🛒 My Cart</h2>
+        {% for c in cart_items %}
+            <div class="item">
+                <span><b>{{ c.item.name }}</b> (x{{ c.quantity }})</span>
+                <span>₹{{ c.total_price }}</span>
+            </div>
+        {% empty %}
+            <p>Your cart is empty.</p>
+        {% endfor %}
+        {% if cart_items %}
+            <h3>Total: ₹{{ total }}</h3>
+            <a href="{% url 'checkout' %}" class="btn">Place Order Now</a>
+        {% endif %}
+    </div>
+</body>
+</html>

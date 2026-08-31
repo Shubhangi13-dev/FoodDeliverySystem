@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f6f9; margin: 0; }
+        .navbar { background: #343a40; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .navbar a { color: #ffc107; text-decoration: none; font-weight: bold; margin-left: 15px; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 15px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .btn { background: #ff5722; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-block; width: 100%; text-align: center; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>🍔 QuickBite</h2>
+        <div>
+            {% if user.is_authenticated %}
+                <span>Welcome, <b>{{ user.username }}</b></span>
+                <a href="{% url 'cart' %}">🛒 My Cart</a>
+                <a href="{% url 'my_orders' %}">📦 Orders</a>
+                <a href="{% url 'logout' %}" style="color: #ff5252;">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container">
+        <h3>Food Menu</h3>
+        <div class="grid">
+            {% for item in items %}
+                <div class="card">
+                    <h4>{{ item.name }}</h4>
+                    <p>{{ item.description }}</p>
+                    <p><b>₹{{ item.price }}</b></p>
+                    <a href="{% url 'add_to_cart' item.id %}" class="btn">Add to Cart</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
